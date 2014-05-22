@@ -1,18 +1,17 @@
+var env = require('./environment.js');
+
 // This is the configuration file showing how a suite of tests might
 // handle log-in using the onPrepare field.
-var port =  + (process.env.HTTP_PORT || '8000');
-var baseUrl = 'http://localhost:' + port;
-
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   specs: [
     'login/login_spec.js'
   ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: env.capabilities,
+
+  baseUrl: env.baseUrl,
 
   onPrepare: function() {
     browser.driver.get(baseUrl + '/login.html');
@@ -29,7 +28,5 @@ exports.config = {
         return /index/.test(url);
       });
     });
-  },
-
-  baseUrl: baseUrl,
+  }
 };
