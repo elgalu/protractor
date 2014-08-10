@@ -20,19 +20,26 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '34',
-    'selenium-version': '2.42.0',
+    'version': '35',
+    'selenium-version': '2.42.2',
     'platform': 'OS X 10.9'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '29',
-    'selenium-version': '2.42.0'
+    'version': '30',
+    // TODO - as of 2014/8/5 this has stopped working. Reinstate when possible.
+    // 'selenium-version': '2.42.2'
   }],
 
   baseUrl: env.baseUrl,
+
+  jasmineNodeOpts: {
+    isVerbose: true,
+    showTiming: true,
+    defaultTimeoutInterval: 90000
+  },
 
   params: {
     login: {

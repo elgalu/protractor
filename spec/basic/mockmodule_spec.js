@@ -42,10 +42,34 @@ describe('mock modules', function() {
     expect(element(by.css('[app-version]')).getText()).toEqual('3');
   });
 
+  it('should use the latest module if two are added with the same name', function() {
+    browser.addMockModule('moduleA', mockModuleA);
+
+    var mockModuleA2 = function() {
+      var newModule = angular.module('moduleA', []);
+      newModule.value('version', '3');
+    };
+
+    browser.addMockModule('moduleA', mockModuleA2);
+
+    browser.get('index.html');
+
+    expect(element(by.css('[app-version]')).getText()).toEqual('3');
+  });
+
   it('should have the version of the module A after deleting module B', function() {
     browser.addMockModule('moduleA', mockModuleA);
     browser.addMockModule('moduleB', mockModuleB);
 
+    browser.removeMockModule('moduleB');
+
+    browser.get('index.html');
+
+    expect(element(by.css('[app-version]')).getText()).toEqual('2');
+  });
+
+  it('should be a noop to remove a module which does not exist', function() {
+    browser.addMockModule('moduleA', mockModuleA);
     browser.removeMockModule('moduleB');
 
     browser.get('index.html');
@@ -92,19 +116,25 @@ describe('mock modules', function() {
   */
 
   it('should load mock modules after navigating back and forward from link', function() {
-    browser.addMockModule('moduleA', mockModuleA);
+    browser.getCapabilities().then(function(caps) {
+      if (caps.get('browserName') === 'safari') {
+        // Safari can't handle navigation. Ignore this test.
+        return;
+      } else {
+        browser.addMockModule('moduleA', mockModuleA);
 
-    browser.get('index.html');
-    expect(element(by.css('[app-version]')).getText()).toEqual('2');
+        browser.get('index.html');
+        expect(element(by.css('[app-version]')).getText()).toEqual('2');
 
-    element(by.linkText('repeater')).click();
-    expect(element(by.css('[app-version]')).getText()).toEqual('2');
+        element(by.linkText('repeater')).click();
+        expect(element(by.css('[app-version]')).getText()).toEqual('2');
 
-    browser.navigate().back();
-    expect(element(by.css('[app-version]')).getText()).toEqual('2');
+        browser.navigate().back();
+        expect(element(by.css('[app-version]')).getText()).toEqual('2');
 
-    browser.navigate().forward();
-    expect(element(by.css('[app-version]')).getText()).toEqual('2');
+        browser.navigate().forward();
+        expect(element(by.css('[app-version]')).getText()).toEqual('2');
+      }
+    });
   });
-
 });

@@ -1,3 +1,371 @@
+# 1.0.0
+
+No changes from rc6.
+
+# 1.0.0-rc6
+
+## Dependency Version Upgrades
+
+- ([b6ab644](https://github.com/angular/protractor/commit/b6ab644dd8105d3f64e347342a0ae2ad2f0100fc)) 
+  chore(jasminewd): update to version 1.0.4
+
+  This version contains a fix for too many timeout messages.
+
+## Bug Fixes
+
+- ([0c4a70e](https://github.com/angular/protractor/commit/0c4a70e0ffbbf4373dbd9f1ab29daabe9338d57b)) 
+  fix(protractor) fix stack traces for WebElement errors
+
+  When angular/protractor@3c0e727136ab3d397c1a9a2bb02692d0aeb9be40 refactored `element()` into the
+  ElementFinder object, the function lost some of its error handling.  This removed references to
+  frames inside tests (`it()` blocks), making it hard to tell where the error was actually
+  occurring.
+
+  This commit fixes these problems, showing full stack traces for WebElement errors.
+
+# 1.0.0-rc5
+
+## Features
+
+- ([51a5e89](https://github.com/angular/protractor/commit/51a5e89f7dace45e61d8eab70e1ea6e9354d4de6)) 
+  feat(config): allow setting the get page timeout globally from the config
+
+  To change the timeout for how long a page is allowed to stall on `browser.get`, change
+  `getPageTimeout: timeout_in_millis` in the configuration. As before, you may also change the
+  timeout for one particular `get` call by using a second parameter:
+  `browser.get(url, timeout_in_sec)`
+
+## Bug Fixes
+
+- ([985ff27](https://github.com/angular/protractor/commit/985ff27c9a94cca83af8db5bf7e570d826b23838)) 
+  fix(configParser): load new functions from configs
+
+  Closes #1043
+
+## Breaking Changes
+
+- ([51a5e89](https://github.com/angular/protractor/commit/51a5e89f7dace45e61d8eab70e1ea6e9354d4de6)) 
+  feat(config): allow setting the get page timeout globally from the config
+
+  This change contains a small breaking change for consistency. Previously, the second parameter to
+  `get` changed the timeout in seconds. Now, the units are milliseconds. This is consistent with
+  all the other timeouts, as well as base JavaScript functions like setTimeout.
+
+   - before: `browser.get(url, 4)`
+  - after: `browser.get(url, 4000)`
+
+# 1.0.0-rc4
+
+## Bug Fixes
+
+- ([ab1d0be](https://github.com/angular/protractor/commit/ab1d0be8cd83b37906b9b8750dd9d85d72))
+  fix(navigation): fix using browser.get with safari driver
+
+  SafariDriver fails with data urls - see #1049. Reverting to use about:blank for now.
+
+# 1.0.0-rc3
+
+## Features
+
+- ([f0e7984](https://github.com/angular/protractor/commit/f0e7984cdd169df947142c1cff0bd1bc33ac995b)) 
+  feat(launcher): append capability tag for all output
+
+## Bug Fixes
+
+- ([1198dde](https://github.com/angular/protractor/commit/1198ddef9e353383819fca3a40bdaba0db22f96f)) 
+  fix(navigation): use empty html data urls for page resets instead of about:blank
+
+  Except on internet explorer, which does not allow data urls.
+
+  Closes #1023.
+
+# 1.0.0-rc2
+
+## Dependency Version Updates
+
+- ([e10e1a4](https://github.com/angular/protractor/commit/e10e1a4a8ae5013982f00d209e6fab1ff2b1d2a1)) 
+  chore(minijasminenode): update minijasminenode dependency to v1.1.0
+
+  This adds several options for the reporter, which can be included in protractor's
+  `config.jasmineNodeOpts`
+  ```js
+  // If true, output nothing to the terminal. Overrides other printing options.
+  silent: false,
+  // If true, print timestamps for failures
+  showTiming: true,
+  // Print failures in real time.
+  realtimeFailure: false
+  ```
+
+- ([be0bb00](https://github.com/angular/protractor/commit/be0bb00db6f51e381e31e80c6808a202270ecb20)) 
+  chore(jasminewd): update jasminewd to v1.0.3
+
+  This fixes extra logging when a timeout occurs.
+
+## Features
+
+- ([82c1d47](https://github.com/angular/protractor/commit/82c1d47462779688bb8c9ac74ba3a6ecfefb7775)) 
+  feat(protractor): add iteration index to ElementArrayFinder.each
+
+- ([62bcf7e](https://github.com/angular/protractor/commit/62bcf7e1c84ed720bc17435c40e1f78c50ba194c)) 
+  feat(webdriver-manager): minor proxy enhancements
+
+  Added error handling for request - previously, any errors coming from the request module were
+  silently swallowed.
+
+  Fixed error handling to remove empty files when a download fails for some reason.
+
+  Also evaluating both uppercase and lowercase proxy variables. Many tools use proxy variables in
+  the form https_proxy, others use HTTPS_PROXY.
+
+## Bug Fixes
+
+- ([dbf7ab5](https://github.com/angular/protractor/commit/dbf7ab5fdf7832676f37328e2ad96b9097db3f62)) 
+  fix(mocha): mocha globals should be re-wrapped for every new suite
+
+  Closes #523, closes #962
+
+
+# 1.0.0-rc1
+
+## Dependency Version Updates
+
+- ([0dc0421](https://github.com/angular/protractor/commit/0dc04217a6a5b772d42b1463c91d89beca7df258)) 
+  chore(selenium): version bumps to selenium 2.42.2
+
+## Features
+
+- ([6906c93](https://github.com/angular/protractor/commit/6906c9326a4a83d81a0d09bdc1446cccb579d699)) 
+  feat(webdriver-manager): use proxy for webdriver-manager
+
+- ([7d90880](https://github.com/angular/protractor/commit/7d9088025c5a1c37428ea3f1cee3dc8d3793f79e)) 
+  feat(locators): implement by.options
+
+- ([4e1cfe5](https://github.com/angular/protractor/commit/4e1cfe5ad0f22947d21b4ebecd7cd05e0319af1a)) 
+  feature(launcher): aggregate failures at the end and output message from the launcher
+
+- ([ff3d5eb](https://github.com/angular/protractor/commit/ff3d5ebc071a8806259f5da20018f2d937409455)) 
+  feat(locators): add toString() wrapper for this.message
+
+- ([c892c2a](https://github.com/angular/protractor/commit/c892c2a1a773cc24cc6565efe2db892776143104)) 
+  feat(protractor): implement reduce and filter for ElementArrayFinder
+
+  See https://github.com/angular/protractor/issues/877
+
+- ([8920028](https://github.com/angular/protractor/commit/8920028f42e683dc45e18a6dd9386bd862548010)) 
+  feat(pause): allow the user to specify a port to be used for debugging
+
+  Using browser.pause(portNumber) will now start the debugger on the specified port number.
+
+  Closes #956
+
+## Bug Fixes
+
+- ([f9082d0](https://github.com/angular/protractor/commit/f9082d0460c7b6465d53c37f326a0f66412c21ce)) 
+  fix(clientsidescripts): make exactBinding more exact
+
+  See https://github.com/angular/protractor/issues/925
+
+- ([6641c81](https://github.com/angular/protractor/commit/6641c8168d74914d4826c5968771a2aec8299833)) 
+  fix(launcher): report summary when specs fail
+
+- ([36e0e0a](https://github.com/angular/protractor/commit/36e0e0aaf090b0c9b5450fa59ba2da4c4237442a)) 
+  fix(protractor): allow exceptions from actions to be catchable
+
+  See https://github.com/angular/protractor/issues/959
+
+- ([e86eb72](https://github.com/angular/protractor/commit/e86eb726ad20737d463341afdb4c56b4d19ef414)) 
+  fix(protractor): removing a mock module that was never added now is a noop
+
+  It used to remove the last module - now is a noop.
+
+  Closes #764
+
+- ([bf26f76](https://github.com/angular/protractor/commit/bf26f76ba5dc99d02ea4cd7fc198dce410a9f58c)) 
+  fix(locators): findind elements by text should trim whitespace
+
+  WebDriver always trims whitespace from around the text of an element, so to be consistent we
+  should trim the text from button elements before doing a by.buttonText.
+
+  Closes #903, Closes #904.
+
+- ([48798b0](https://github.com/angular/protractor/commit/48798b0a8ac1fc56d0cdd80e177d67fdf592069c)) 
+  fix(elementexplorer): element.all hangs in interactive mode
+
+# 0.24.2
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+
+- ([a43f983](https://github.com/angular/protractor/commit/a43f98391d36cead7378d1dd26f54248f39300b7)) 
+  fix(protractor): make ElementFinder.then resolve to itself instead of null
+
+- ([31d42a3](https://github.com/angular/protractor/commit/31d42a3875c5b95893d8a20d00dc5365c289ff98)) 
+  fix(protractor): throw index-out-of-bounds
+
+  See https://github.com/angular/protractor/issues/915
+  - to make error more specific instead of propagate later
+
+# 0.24.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+
+- ([59af936](https://github.com/angular/protractor/commit/59af936e1ef6e21432f7876144554db145083d46)) 
+  fix(locators): Missing information in warning/error messages
+
+  Webdriver's built-in locators (such as `by.css()`) appeared as
+  'undefined' in protractor's messages.
+
+  For instance, if a locator matched multiple elements, protractor would print the following
+  message: 'warning: more than one element found for locator undefined- you may need to be more
+  specific'.
+
+- ([13373f5](https://github.com/angular/protractor/commit/13373f5de18690e1994b32e092105cfe3ad1753d)) 
+  fix(launcher): output error messages when child processes exit with error
+
+  Version 0.24.0 introduced a bug where child processes would error without outputting the error
+  message. Fix. See #902.
+
+- ([72668fe](https://github.com/angular/protractor/commit/72668fe5ebbdc8126ff16887814f763198128ab5)) 
+  fix(cssShortcut): fix $$ global throwing error
+
+# 0.24.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([7299155](https://github.com/angular/protractor/commit/729915554cfa440bda0eec8a1c4bf423f4089481)) 
+  feat(sauceprovider): append spec filename to capabilities.name
+
+- ([f22456d](https://github.com/angular/protractor/commit/f22456d3cf0768a577371776d716b8888a74397d)) 
+  refactor(jasminewd): use jasminewd from its own node module
+
+  The Jasmine Webdriver Adapter is now its own npm module. The code has been moved to
+  http://www.github.com/angular/jasminewd.
+
+  Remove the code from Protractor, and add a dependency on jasminewd@1.0.0.
+
+- ([f23565d](https://github.com/angular/protractor/commit/f23565d5db4fbb102cfec8311ce9dfaee52e9113)) 
+  feat(protractor): new API allowAnimations(bool) on protractor elements.
+
+- ([876a3c0](https://github.com/angular/protractor/commit/876a3c04c07a9f8d97e1edca3ec1f76e51e1a310)) 
+  feat(runner): support running dart2js spec files
+
+  This commit supports running Dart2JS output in NodeJS.  Officially, Dart2JS in supposed to only
+  generate code for running in a real webbrowser.  With this patch, the dart2js code can also be
+  executed in NodeJS.
+
+  Ref:
+  https://code.google.com/p/dart/source/browse/branches/bleeding_edge/dart/sdk/lib/js/dart2js/js_dart2js.dart?spec=svn32943&r=32943#487
+
+- ([8d46e21](https://github.com/angular/protractor/commit/8d46e210b91ed1521f6692a2cf35f60740c0ace6)) 
+  feat(runner): support sourcemaps in spec files
+
+  This feature allows folks who are generating their spec files from a different language to see
+  stack traces that use the line numbers from their sources before translation.
+
+  This commit introduces a dependency on the `source-map-support` library.
+
+  For general information about sourcemaps, refer:
+  -  http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/
+  -  https://github.com/evanw/node-source-map-support
+  -  https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/view
+
+## Bug Fixes
+
+- ([56daa54](https://github.com/angular/protractor/commit/56daa54e2e269064bd44bc05ed0bbf2c44657ca8)) 
+  fix(clientsidescripts): convert non-Error exceptions to Errors
+
+  If any functions called by clientSideScripts throws a an exception that doesn't inherit from
+  `Error`, the stack trace is completely unhelpful and the message is just "unknown error."  This
+  commit wraps such errors into
+  `Error` instances so that we have meaningful stack traces and the correct exception message. 
+  (e.g. This is the common case when running dart2js code.  This commit gives us the Dart stack
+  trace and exception message.)
+
+  In addition, I've pushed the construction of the string to install into the browser into
+  clientsidescripts.js.
+
+- ([00c6abe](https://github.com/angular/protractor/commit/00c6abef16c47868974eed8ad1a4c38494b2a504)) 
+  fix(element): fix WebElement.$ using the incorrect By object
+
+  Closes #852
+
+- ([0500b2c](https://github.com/angular/protractor/commit/0500b2c3b2698fe41bedf694b92aad884f3b0d0e)) 
+  fix(navigation): ignore unknown JS errors when looking for the URL
+
+  This should address #841
+
+  Ignoring the error and trying again has worked for all of my test cases, and the error has never
+  occurred more than once in a row.
+
+- ([c8c85e0](https://github.com/angular/protractor/commit/c8c85e0d94d7a7211b000650f01af714663611ad)) 
+  fix(locators): fix by.repeater finding all rows for IE
+
+  Previously, element.all(by.repeater('foo in foos')) would find non-element nodes for
+  ng-repeat-start elements, which could cause IEDriver to fall over if the test tried to get text
+  from those nodes.
+
+## Breaking Changes
+
+- ([3c0e727](https://github.com/angular/protractor/commit/3c0e727136ab3d397c1a9a2bb02692d0aeb9be40)) 
+  refactor(protractor): reorganize internal structure of elementFinder/webelement
+
+  - Allow chaining of actions (i.e. `element(By.x).clear().sendKeys('abc)`)
+  - first(), last(), and get(index) are not executed immediately, allowing
+      them to be placed in page objects
+  - Rework the way that elementFinder and wrappedWebElement is represented
+  - Breaking changes:
+    - element.all is chained differently
+        ```
+        Before: element(By.x).element.all(By.y)
+        Now:    element(By.x).all(By.y)
+        
+        However, using element.all without chaining did not change,
+          i.e. `element.all(By.x)`
+        ```
+
+    - Changed the way for retrieving underlying webElements
+        ```
+        Before: element(By.x).find(), element(By.x).findElement(By.y),
+                  and element(By.x).findElements(By.y)
+        Now:    element(By.x).getWebElement(),
+                  element(By.x).element(By.y).getWebElement(),
+                  and element(By.x).element(By.y).getWebElements(),
+                  respectively
+        ```
+    - browser.findElement returns a raw WebElement so $, $$, and
+        evaluate will no longer be available
+
+- ([fbfc72b](https://github.com/angular/protractor/commit/fbfc72bad15667990232bb9ff1da503e03d16230)) 
+  feat(launcher): Add support for maxSession
+
+  - add support for maxSession and capability-specific specs
+  - cleaned up launcher (refactored out taskScheduler.js)
+  - Breaking change:
+    - changed the config to shard test files; also sharding is specific to
+  capabilities now
+      ```
+      Before: config.splitTestsBetweenCapabilities
+      Now: config.capabilities.shardTestFiles or config.multiCapabilities[index].shardTestFiles
+      ```
+
+- ([9e5d9e4](https://github.com/angular/protractor/commit/9e5d9e4abb7d0928e6092a711fda527554994be7)) 
+  feat(locators): remove deprecated locator APIs
+
+  This is a **breaking change**. The following deprecated Locator APIs have been removed.
+
+  - `by.input`
+  - `by.select`
+  - `by.selectedOption`
+  - `by.textarea`
+
+  `input`, `select`, and `textarea` can be replaced by `by.model`.
+
+  `element(by.selectedOption('foo'))` can be replaced by
+  `element(by.model('foo')).$('option:checked')`
+
 # 0.23.1
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 

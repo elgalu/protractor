@@ -44,7 +44,7 @@ var chromeConfig = {
     browserName: 'chrome'
   }
 };
-testDriverProvider(require('../lib/driverProviders/chrome.dp')(chromeConfig)).
+testDriverProvider(require('../lib/driverProviders/chrome')(chromeConfig)).
     then(function() {
       console.log('chrome.dp working!');
     }, function(err) {
@@ -52,16 +52,29 @@ testDriverProvider(require('../lib/driverProviders/chrome.dp')(chromeConfig)).
     });
 
 var hostedConfig = {
-  sauceAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: 'http://localhost:4444/wd/hub',
   capabilities: {
     browserName: 'firefox'
   }
 };
-testDriverProvider(require('../lib/driverProviders/hosted.dp')(hostedConfig)).
+testDriverProvider(require('../lib/driverProviders/hosted')(hostedConfig)).
     then(function() {
       console.log('hosted.dp working!');
     }, function(err) {
       console.log('hosted.dp failed with ' + err);
+    });
+
+var hostedPromisedConfig = {
+  seleniumAddress: q.when('http://localhost:4444/wd/hub'),
+  capabilities: {
+    browserName: 'firefox'
+  }
+};
+testDriverProvider(require('../lib/driverProviders/hosted')(hostedPromisedConfig)).
+    then(function() {
+      console.log('hosted.dp with promises working!');
+    }, function(err) {
+      console.log('hosted.dp with promises failed with ' + err);
     });
 
 var localConfig = {
@@ -70,7 +83,7 @@ var localConfig = {
     browserName: 'chrome'
   }
 };
-testDriverProvider(require('../lib/driverProviders/local.dp')(localConfig)).
+testDriverProvider(require('../lib/driverProviders/local')(localConfig)).
     then(function() {
       console.log('local.dp working!');
     }, function(err) {
@@ -85,7 +98,7 @@ if (argv.sauceUser && argv.sauceKey) {
       browserName: 'chrome'
     }
   };
-  testDriverProvider(require('../lib/driverProviders/sauce.dp')(sauceConfig)).
+  testDriverProvider(require('../lib/driverProviders/sauce')(sauceConfig)).
       then(function() {
         console.log('sauce.dp working!');
       }, function(err) {

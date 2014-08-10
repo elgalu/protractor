@@ -1,9 +1,10 @@
 debugging/
 spec/
+stress/
 selenium/
 debugging/
 testapp/inbrowsertest
-docs/build
+docgen/
 
 .npmignore
 .travis.yml
