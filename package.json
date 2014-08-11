@@ -15,7 +15,7 @@
     "request": "~2.36.0",
     "selenium-webdriver": "~2.42",
     "minijasminenode": "1.1.1",
-    "jasminewd": "git://github.com/elgalu/jasminewd.git#jasmine_retry",
+    "jasminewd": "git://github.com/elgalu/jasminewd.git#retrymerge",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
     "adm-zip": "0.4.4",
@@ -48,7 +48,6 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "pretest": "node_modules/.bin/jshint lib spec",
     "test": "scripts/test.js",
     "start": "testapp/scripts/web-server.js"
   },
